@@ -108,7 +108,8 @@
   fonts = {
     # Now handled by stylix except noto-fonts for emojis and special characters
     packages = with pkgs; [
-      #   nerd-fonts.iosevka
+      nerd-fonts.iosevka
+      nerd-fonts.fira-code
       #   eb-garamond
       #   liberation_ttf
       #   overpass

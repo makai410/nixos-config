@@ -129,7 +129,7 @@
 
     style = ''
       * {
-        font-family: "Inconsolata Nerd Font";
+        font-family: "FiraCode Nerd Font Mono";
         font-weight: bold;
         font-size: 14px;
       }
