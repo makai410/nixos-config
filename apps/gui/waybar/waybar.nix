@@ -7,8 +7,8 @@
         position = "top";
         height = 30;
         spacing = 4;
-        margin-left = 14;
-        margin-right = 14;
+        margin-left = 4;
+        margin-right = 4;
         margin-top = 2;
         modules-left = [
           "custom/nixos"
@@ -23,6 +23,7 @@
           "temperature"
           "battery"
           "clock"
+          "tray"
         ];
 
         "custom/nixos" = {
@@ -117,6 +118,11 @@
           format = "{:%H:%M}";
           tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
           format-alt = "{:%Y-%m-%d}";
+        };
+
+        tray = {
+          "icon-size" = 18;
+          "spacing" = 10;
         };
       };
     };

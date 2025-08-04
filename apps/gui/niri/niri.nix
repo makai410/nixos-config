@@ -37,12 +37,7 @@
 
       spawn-at-startup = [
         {
-          command = [
-            "systemctl"
-            "--user"
-            "reset-failed"
-            "waybar-service"
-          ];
+          command = [ "waybar" ];
         }
         {
           command = [ "mako" ];
@@ -60,15 +55,6 @@
           ];
         }
       ];
-
-      workspaces = {
-        "1-chat" = {
-          name = "chat";
-        };
-        "2-coding" = {
-          name = "coding";
-        };
-      };
 
       hotkey-overlay = {
         skip-at-startup = true;

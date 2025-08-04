@@ -17,12 +17,68 @@
       }
 
       {
-        # Discord
+        matches = [
+          {is-floating = true;}
+        ];
+        shadow.enable = true;
+      }
+
+      {
+        matches = [
+          {
+            is-window-cast-target = true;
+          }
+        ];
+        focus-ring = {
+          active.color = "#DA70D6";
+        };
+        shadow = {
+          color = "#da70d66b";
+        };
+        tab-indicator = {
+          active.color = "#f38ba8";
+          inactive.color = "#da70d66b";
+        };
+      }
+
+      {
+        matches = [{app-id = "org.telegram.desktop";}];
+        block-out-from = "screencast";
+      }
+
+      {
         matches = [
           { app-id = "^(vesktop)$"; }
+          { app-id = "zen"; }
         ];
-        open-on-workspace = "chat";
         open-maximized = true;
+      }
+
+      {
+        matches = [
+          {
+            app-id = "zen";
+            title = "Picture-in-Picture";
+          }
+        ];
+        open-floating = true;
+        default-floating-position = {
+          x = 32;
+          y = 32;
+          relative-to = "bottom-right";
+        };
+        default-column-width = {fixed = 480;};
+        default-window-height = {fixed = 270;};
+      }
+
+      {
+        matches = [{title = "Picture in picture";}];
+        open-floating = true;
+        default-floating-position = {
+          x = 32;
+          y = 32;
+          relative-to = "bottom-right";
+        };
       }
 
       {

@@ -15,8 +15,6 @@
         { proportion = 2. / 3.; }
       ];
 
-      always-center-single-column = true;
-
       border = {
         enable = true;
         width = 2;
