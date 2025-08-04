@@ -171,7 +171,7 @@
       }
 
       #custom-nixos {
-        font-size: 18px;
+        font-size: 16px;
         padding-left: 10px;
       }
 
