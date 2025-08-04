@@ -153,7 +153,6 @@ let
                     ../apps/system/zoxide/zoxide.nix
                     ../apps/system/zathura/zathura.nix
                     ../apps/system/tealdeer/tealdeer.nix
-                    ../apps/system/dae/dae.nix
                     homeConfig
                   ]
                   ++ homeModules
