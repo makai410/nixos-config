@@ -34,7 +34,7 @@
         "niri/workspaces" = {
           format = "{icon}";
           format-icons = {
-            "browser" = "";
+            "coding" = "";
             "chat" = "<b></b>";
 
             "default" = "";
