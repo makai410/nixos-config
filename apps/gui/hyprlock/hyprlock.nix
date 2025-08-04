@@ -12,8 +12,6 @@
       };
 
       background = {
-        path = "$HOME/Pictures/wallpapers/acane_washmachine.jpg";
-
         blur_passes = 1; # 0 disables blurring
         blur_size = 7;
         noise = 1.17e-2;
@@ -41,12 +39,6 @@
         halign = "center";
         valign = "center";
       };
-    };
-  };
-
-  home.file = {
-    "Pictures/wallpapers/acane_washmachine.png" = {
-      source = ../../../assets/wallpapers/acane_washmachine.jpg;
     };
   };
 }
