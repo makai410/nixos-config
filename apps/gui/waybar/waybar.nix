@@ -6,9 +6,9 @@
         layer = "top";
         position = "top";
         height = 30;
-        spacing = 4;
-        margin-left = 4;
-        margin-right = 4;
+        spacing = 8;
+        margin-left = 14;
+        margin-right = 14;
         margin-top = 2;
         modules-left = [
           "custom/nixos"
