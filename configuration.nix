@@ -1,0 +1,191 @@
+# Edit this configuration file to define what should be installed on
+# your system.  Help is available in the configuration.nix(5) man page
+# and in the NixOS manual (accessible by running ‘nixos-help’).
+{
+  pkgs,
+  inputs,
+  lib,
+  user,
+  hostName,
+  stateVersion,
+  ...
+}:
+{
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  networking.hostName = "${hostName}";
+
+  # Enable networking
+  networking.networkmanager = {
+    enable = true;
+  };
+  networking.firewall.enable = lib.mkDefault false;
+  services.resolved.enable = true;
+
+  # Set your time zone.
+  time.timeZone = "Asia/Shanghai";
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_US.UTF-8";
+
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "zh_CN.UTF-8";
+    LC_IDENTIFICATION = "zh_CN.UTF-8";
+    LC_MEASUREMENT = "zh_CN.UTF-8";
+    LC_MONETARY = "zh_CN.UTF-8";
+    LC_NAME = "zh_CN.UTF-8";
+    LC_NUMERIC = "zh_CN.UTF-8";
+    LC_PAPER = "zh_CN.UTF-8";
+    LC_TELEPHONE = "zh_CN.UTF-8";
+    LC_TIME = "zh_CN.UTF-8";
+  };
+
+  # Configure console keymap
+  console.keyMap = "us";
+
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
+  # Enable sound with pipewire.
+  services.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    # If you want to use JACK applications, uncomment this
+    # jack.enable = true;
+
+    # wireplumber.extraConfig.wireplumber-disable-camera = {
+    #   "wireplumber.profiles" = {
+    #     "monitor.libcamera" = "disabled";
+    #   };
+    # };
+  };
+
+  security.doas.enable = false;
+  security.sudo.enable = true;
+  # Configure doas
+  security.doas.extraRules = [
+    {
+      users = [ "$user" ];
+      keepEnv = true;
+      persist = true;
+    }
+  ];
+
+  users.mutableUsers = lib.mkDefault true;
+  users.users.${user} = {
+    isNormalUser = true;
+    description = "$user";
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "video"
+    ];
+    shell = "${pkgs.fish}/bin/fish";
+  };
+
+  # Allow unfree packages
+  nixpkgs.config = {
+    allowUnfree = true;
+    chromium.enableWideVine = true;
+  };
+  nixpkgs.overlays = [ inputs.nur.overlays.default ];
+
+  environment.systemPackages = with pkgs; [
+    killall
+    nfs-utils
+    wireguard-tools
+    git
+  ];
+
+  programs.command-not-found.enable = false;
+
+  fonts = {
+    # Now handled by stylix except noto-fonts for emojis and special characters
+    packages = with pkgs; [
+      #   nerd-fonts.iosevka
+      #   eb-garamond
+      #   liberation_ttf
+      #   overpass
+      noto-fonts
+      noto-fonts-cjk-sans
+      #   noto-fonts-emoji
+    ];
+    fontconfig = {
+      enable = true;
+    };
+  };
+
+  services.printing.enable = lib.mkDefault false;
+  services.gnome.gnome-keyring.enable = true;
+  services.gnome.gcr-ssh-agent.enable = true;
+  services.fstrim.enable = true;
+  services.journald.extraConfig = ''
+    SystemMaxUse=50M
+    SystemMaxFileSize=10M
+    RuntimeMaxUse=50M
+    RuntimeMaxFileSize=10M
+  '';
+
+  services.gvfs.enable = true;
+
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  # programs.mtr.enable = true;
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
+
+  # Enable the OpenSSH daemon.
+  services.openssh.enable = true;
+
+  nix = {
+    extraOptions = ''
+      experimental-features = nix-command flakes ca-derivations
+      keep-outputs = true
+      keep-derivations = true
+    '';
+    settings = {
+      substituters = [
+        "https://cache.nixos.org"
+      ];
+      trusted-public-keys = [
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      ];
+      trusted-users = [
+        "root"
+        "${user}"
+      ];
+      nix-path = lib.mkForce "nixpkgs=/etc/nix/inputs/nixpkgs";
+      auto-optimise-store = true;
+    };
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
+    };
+    registry.nixpkgs.flake = inputs.nixpkgs;
+    channel.enable = false;
+  };
+
+  environment.etc."nix/inputs/nixpkgs".source = "${inputs.nixpkgs}";
+
+  zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+  };
+
+  # This value determines the NixOS release from which the default
+  # settings for stateful data, like file locations and database versions
+  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # this value at the release version of the first install of this system.
+  # Before changing this value read the documentation for this option
+  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  system.stateVersion = "${stateVersion}"; # Did you read the comment?
+}

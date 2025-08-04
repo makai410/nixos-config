@@ -1,0 +1,59 @@
+global {
+  wan_interface: auto
+  log_level: info
+  dial_mode: domain
+#  allow_insecure: false
+  auto_config_kernel_parameter: true
+}
+node {
+  clash: 'socks5://127.0.0.1:7891'
+}
+dns {
+  upstream {
+    googledns: 'tcp+udp://dns.google:53'
+    alidns: 'udp://dns.alidns.com:53'
+  }
+  routing {
+    request {
+      qtype(https) -> reject
+      fallback: alidns
+    }
+    response {
+      upstream(googledns) -> accept
+      ip(geoip:private) && !qname(geosite:cn) -> googledns
+      fallback: accept
+    }
+  }
+}
+group {
+  clash {
+    policy: fixed(0)
+  }
+}
+# 更多的 Routing 样例见 https://github.com/daeuniverse/dae/blob/main/docs/en/configuration/routing.md
+routing {
+  pname(NetworkManager) -> direct
+  dip(224.0.0.0/3, 'ff00::/8') -> direct
+  dip(119.29.29.29) -> must_direct
+
+  pname(clash) -> must_direct
+  pname(clash-verge) -> must_direct
+  pname(verge-mihomo) -> must_direct
+  pname(clash-verge-rev) -> must_direct
+  pname(clash-meta) -> must_direct
+  pname(mihomo) -> must_direct
+  pname(qemu-system-x86) -> must_direct
+
+  domain(suffix: bing.com) -> clash
+  domain(suffix: wikipedia.org) -> clash
+  domain(suffix: github.com) -> clash
+  domain(geosite:github) -> clash
+  domain(suffix: static.rust-lang.org) -> clash
+  domain(suffix: steampowered.com) -> clash
+
+  dport(22) -> direct
+
+  dip(geoip:private) -> direct
+
+  fallback: clash
+}
