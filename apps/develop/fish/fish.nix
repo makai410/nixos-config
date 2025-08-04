@@ -31,7 +31,7 @@
       set -g theme_powerline_fonts yes
       set -g theme_color_scheme dark
       set -x VIRTUAL_ENV_DISABLE_PROMPT 1
-      set -x EDITOR hx
+      set -x EDITOR nvim
       set -x IMG_VIEWER imv-dir
       set -x NNN_FIFO /tmp/nnn.fifo
     '';
