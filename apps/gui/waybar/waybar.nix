@@ -123,7 +123,7 @@
 
     style = ''
       * {
-        font-family: "Inconsolata Font Nerd Font";
+        font-family: "Inconsolata Nerd Font";
         font-weight: bold;
         font-size: 14px;
       }
