@@ -45,7 +45,7 @@
   };
 
   home.file = {
-    "Pictures/wallpapers/lockscreen.png" = {
+    "Pictures/wallpapers/acane_washmachine.png" = {
       source = ../../../assets/wallpapers/acane_washmachine.jpg;
     };
   };
