@@ -178,7 +178,6 @@ in
       "chromium"
       "obs"
       "python"
-      "vscode"
     ];
     extraModules = [
       inputs.nixos-hardware.nixosModules.common-cpu-amd
@@ -203,7 +202,6 @@ in
       "chromium"
       "obs"
       "python"
-      "vscode"
     ];
     extraModules = [
       inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate

@@ -50,6 +50,7 @@
     zulip
     clash-verge-rev
     zotero_7
+    vscode
     (symlinkJoin {
       name = "vesktop";
       paths = [ vesktop ];
