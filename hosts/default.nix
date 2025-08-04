@@ -115,11 +115,11 @@ let
           baseConfig
           ../services/overlays.nix
           ../services/cachix/cachix.nix
-          ../services/dae/dae.nix
           inputs.stylix.nixosModules.stylix
           ../apps/gui/stylix/default.nix
           ../apps/system/udiskie/default.nix
           ../apps/system/fcitx5/default.nix
+          ../apps/system/dae/default.nix
           inputs.home-manager.nixosModules.home-manager
           {
             home-manager = {
@@ -153,6 +153,7 @@ let
                     ../apps/system/zoxide/zoxide.nix
                     ../apps/system/zathura/zathura.nix
                     ../apps/system/tealdeer/tealdeer.nix
+                    ../apps/system/dae/dae.nix
                     homeConfig
                   ]
                   ++ homeModules
