@@ -127,7 +127,7 @@
       #   "tofi-run | xargs niri msg action spawn --"
       # ];
       "Mod+Space".action.spawn = "anyrun";
-      "Mod+Z".action.spawn = "zen-browser";
+      "Mod+Z".action.spawn = "zen";
       "Mod+D".action.spawn = "supersonic";
       "Mod+N".action.spawn = "keepassxc";
       "Mod+T".action.spawn = "vscode";
