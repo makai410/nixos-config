@@ -68,9 +68,6 @@ let
     zen-browser = {
       home = [ ../apps/misc/zen-browser/zen-browser.nix ];
     };
-    vscode = {
-      home = [ ../apps/develop/vscode/vscode.nix ];
-    };
   };
 
   mkHost =
