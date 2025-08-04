@@ -38,7 +38,7 @@ in
       };
       monospace = { 
         package = pkgs.nerd-fonts.inconsolata;
-        name = "Inconsolata Font Mono";
+        name = "Inconsolata Font Nerd Font";
       };
       emoji = {
         package = pkgs.noto-fonts-emoji;
