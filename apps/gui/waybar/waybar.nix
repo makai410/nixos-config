@@ -27,7 +27,7 @@
         ];
 
         "custom/nixos" = {
-          format = "";
+          format = "; ずっと真夜中でいいのに。";
           tooltip = true;
           tooltip-format = "btw";
         };
@@ -129,7 +129,7 @@
 
     style = ''
       * {
-        font-family: "FiraCode Nerd Font Mono";
+        font-family: "FiraCode Nerd Font";
         font-weight: bold;
         font-size: 14px;
       }
