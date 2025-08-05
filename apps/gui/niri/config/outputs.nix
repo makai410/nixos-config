@@ -3,7 +3,7 @@
     outputs = {
       # niri msg outputs
       eDP-1 = {
-        scale = 2.00;
+        scale = 1.75;
       };
       "PNP(SAC) G72 MAX 0000000000000" = {
         scale = 1.25;
