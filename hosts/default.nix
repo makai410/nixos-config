@@ -183,7 +183,7 @@ in
       inputs.nixos-hardware.nixosModules.common-cpu-amd
       inputs.nixos-hardware.nixosModules.common-gpu-amd
       {
-        my.stylix.wallpaper = "hippocampal_pain";
+        my.stylix.wallpaper = "acane_washmachine";
       }
     ];
     extraHomeModules = [
@@ -207,7 +207,7 @@ in
       inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
       inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
       {
-        my.stylix.wallpaper = "hippocampal_pain";
+        my.stylix.wallpaper = "acane_washmachine";
       }
     ];
     extraHomeModules = [
