@@ -19,6 +19,10 @@
   networking.networkmanager = {
     enable = true;
   };
+  networking.wireless.iwd = {
+    enable = true;
+    settings.General.EnableNetworkConfiguration = true;
+  };
   networking.firewall.enable = lib.mkDefault false;
   services.resolved.enable = true;
 
