@@ -27,7 +27,7 @@
         ];
 
         "custom/nixos" = {
-          format = "; ずっと真夜中でいいのに。";
+          format = "  ずっと真夜中でいいのに。";
           tooltip = true;
           tooltip-format = "btw";
         };
