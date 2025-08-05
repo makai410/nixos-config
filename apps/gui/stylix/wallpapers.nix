@@ -13,6 +13,10 @@
       image = ../../../assets/wallpapers/hippocampal_pain.png;
       imageScalingMode = "fill";
     };
+    "acane_washmachine" = {
+      image = ../../../assets/wallpapers/acane_washmachine.jpg;
+      imageScalingMode = "fill";
+    };
   };
   defaultWallpaper = "warma-moon";
 }
