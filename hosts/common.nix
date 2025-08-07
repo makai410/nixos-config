@@ -51,6 +51,7 @@
     clash-verge-rev
     zotero_7
     vscode
+    qq
     (symlinkJoin {
       name = "vesktop";
       paths = [ vesktop ];
