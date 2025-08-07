@@ -152,7 +152,7 @@
 
       #workspaces button.focused {
         box-shadow: none;
-        color: #f6c177;
+        color: #DA70D6;
         font-weight: 900;
       }
 
