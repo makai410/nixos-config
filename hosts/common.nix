@@ -51,7 +51,14 @@
     clash-verge-rev
     zotero_7
     vscode
-    qq
+    (symlinkJoin {
+      name = "qq";
+      paths = [ qq ];
+      buildInputs = [ makeWrapper ];
+      postBuild = ''
+        wrapProgram $out/bin/qq --add-flags "--wayland-text-input-version=3"
+      '';
+    })
     (symlinkJoin {
       name = "vesktop";
       paths = [ vesktop ];
