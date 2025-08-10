@@ -51,6 +51,7 @@
     clash-verge-rev
     zotero_7
     vscode
+    gcc
     (symlinkJoin {
       name = "qq";
       paths = [ qq ];
