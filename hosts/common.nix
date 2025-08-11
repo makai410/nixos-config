@@ -57,7 +57,7 @@
       paths = [ qq ];
       buildInputs = [ makeWrapper ];
       postBuild = ''
-        wrapProgram $out/bin/qq --add-flags "--wayland-text-input-version=3" --enable-features=UseOzonePlatform --ozone-platform=wayland
+        wrapProgram $out/bin/qq --add-flags "--wayland-text-input-version=3 --enable-features=UseOzonePlatform --ozone-platform=wayland"
       '';
     })
     (symlinkJoin {
