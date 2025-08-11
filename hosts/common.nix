@@ -57,7 +57,11 @@
       paths = [ qq ];
       buildInputs = [ makeWrapper ];
       postBuild = ''
-        wrapProgram $out/bin/qq --add-flags "--wayland-text-input-version=3 --enable-features=UseOzonePlatform --ozone-platform=wayland"
+        wrapProgram $out/bin/qq \
+          --set GTK_IM_MODULE fcitx \
+          --set QT_IM_MODULE fcitx \
+          --set XMODIFIERS "@im=fcitx" \
+          --add-flags "--enable-features=UseOzonePlatform --ozone-platform=wayland"
       '';
     })
     (symlinkJoin {
