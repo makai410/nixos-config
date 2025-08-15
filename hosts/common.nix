@@ -53,6 +53,7 @@
     vscode
     gcc
     qq
+    youtube-music
     (symlinkJoin {
       name = "vesktop";
       paths = [ vesktop ];
