@@ -105,7 +105,11 @@
     nfs-utils
     wireguard-tools
     git
+    act
   ];
+
+  # Docker
+  virtualisation.docker.enable = true;
 
   programs.command-not-found.enable = false;
 
