@@ -61,7 +61,7 @@
           --set GTK_IM_MODULE fcitx \
           --set QT_IM_MODULE fcitx \
           --set XMODIFIERS "@im=fcitx" \
-          --add-flags "--enable-features=UseOzonePlatform --ozone-platform=wayland"
+          --add-flags "--enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime"
       '';
     })
     (symlinkJoin {

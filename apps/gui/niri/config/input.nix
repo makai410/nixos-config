@@ -9,6 +9,9 @@
           layout = "us";
         };
       };
+      mouse = {
+        accel-speed = -0.5;
+      };
       touchpad = {
         tap = true;
         dwt = true;
