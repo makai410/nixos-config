@@ -55,13 +55,16 @@
     (symlinkJoin {
       name = "qq";
       paths = [ qq ];
+      inherit (qq) meta;
       buildInputs = [ makeWrapper ];
       postBuild = ''
+        rm $out/share/applications/qq.desktop
+        cp ${qq}/share/applications/qq.desktop $out/share/applications/qq.desktop
+        substituteInPlace $out/share/applications/qq.desktop \
+          --replace-fail "${qq}" $out
         wrapProgram $out/bin/qq \
-          --set GTK_IM_MODULE fcitx \
-          --set QT_IM_MODULE fcitx \
-          --set XMODIFIERS "@im=fcitx" \
-          --add-flags "--enable-features=UseOzonePlatform --ozone-platform=wayland --enable-wayland-ime"
+          --set NIXOS_OZONE_WL 1 \
+          --add-flags '--wayland-text-input-version=3'
       '';
     })
     (symlinkJoin {
