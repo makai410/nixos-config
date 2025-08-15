@@ -52,17 +52,7 @@
     zotero_7
     vscode
     gcc
-    (symlinkJoin {
-      name = "QQ";
-      paths = [ qq ];
-      inherit (qq) pname version meta;
-      buildInputs = [ makeWrapper ];
-      postBuild = ''
-        wrapProgram "$out/bin/qq" \
-          --add-flags --enable-wayland-ime \
-          --add-flags --wayland-text-input-version=3
-      '';
-    })
+    qq
     (symlinkJoin {
       name = "vesktop";
       paths = [ vesktop ];
