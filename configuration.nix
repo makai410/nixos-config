@@ -89,6 +89,7 @@
       "networkmanager"
       "wheel"
       "video"
+      "docker"
     ];
     shell = "${pkgs.fish}/bin/fish";
   };
