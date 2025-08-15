@@ -53,7 +53,7 @@
     vscode
     gcc
     (symlinkJoin {
-      name = "qq";
+      name = "QQ";
       paths = [ qq ];
       inherit (qq) meta;
       buildInputs = [ makeWrapper ];
