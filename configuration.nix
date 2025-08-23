@@ -124,6 +124,14 @@
     act
     # verify that OpenCL is correctly setup
     clinfo
+    # Davinci
+    (pkgs.davinci-resolve.override {
+      buildFHSEnv = a: (pkgs.buildFHSEnv (a // {
+        extraBwrapArgs = a.extraBwrapArgs ++ [
+          "--bind /run/opengl-driver/etc/OpenCL /etc/OpenCL"
+        ];
+      }));
+    })
   ];
 
   environment.variables = {

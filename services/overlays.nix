@@ -5,13 +5,6 @@
     inputs.niri.overlays.niri
     (self: super: {
       qq = super.qq.override { commandLineArgs = [ "--wayland-text-input-version=3" ]; };
-      davinci-resolve = super.davinci-resolve.override (old: {
-        buildFHSEnv = a: (old.buildFHSEnv (a // {
-          extraBwrapArgs = a.extraBwrapArgs ++ [
-            "--bind /run/opengl-driver/etc/OpenCL /etc/OpenCL"
-          ];
-        }));
-      });
       # # to fix zoom memory leak, working version found here https://github.com/NixOS/nixpkgs/pull/361097
       # zoom-us = super.zoom-us.overrideAttrs (oldAttrs: {
       #   version = "6.2.11.5069";
