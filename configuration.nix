@@ -109,6 +109,13 @@
     act
   ];
 
+  # Fix Davinci Resolve
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      rocmPackages.clr.icd
+    ];
+  };
   # Docker
   virtualisation.docker.enable = true;
 
