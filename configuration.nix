@@ -54,8 +54,6 @@
 
   hardware.graphics = {
     enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
     # Fix Davinci Resolve
     extraPackages = with pkgs; [
       rocmPackages.clr.icd    # AMD OpenCL runtime
