@@ -59,11 +59,13 @@
 
   hardware.graphics = {
     enable = true;
-    enable32Bit = true;
     # Fix Davinci Resolve
     extraPackages = with pkgs; [
       rocmPackages.clr.icd
       mesa.opencl # Enables Rusticl (OpenCL) support
+      rocmPackages.clr
+      rocmPackages.rocminfo
+      rocmPackages.rocm-smi
     ];
   };
 
