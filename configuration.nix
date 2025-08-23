@@ -18,11 +18,6 @@
   services.xserver.enable = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
 
-  # Most software has the HIP libraries hard-coded. You can work around it on NixOS by using
-  systemd.tmpfiles.rules = [
-    "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
-  ];
-
   networking.hostName = "${hostName}";
 
   # Enable networking
@@ -61,11 +56,8 @@
     enable = true;
     # Fix Davinci Resolve
     extraPackages = with pkgs; [
-      rocmPackages.clr.icd
       mesa.opencl # Enables Rusticl (OpenCL) support
-      rocmPackages.clr
-      rocmPackages.rocminfo
-      rocmPackages.rocm-smi
+      mesa.drivers
     ];
   };
 
@@ -138,7 +130,6 @@
 
   environment.variables = {
     RUSTICL_ENABLE = "radeonsi";
-    ROC_ENABLE_PRE_VEGA = "1";
   };
   # Docker
   virtualisation.docker.enable = true;
