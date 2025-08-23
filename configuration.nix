@@ -50,6 +50,10 @@
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
+    # Fix Davinci Resolve
+    extraPackages = with pkgs; [
+      rocmPackages.clr.icd
+    ];
   };
 
   # Enable sound with pipewire.
@@ -109,13 +113,6 @@
     act
   ];
 
-  # Fix Davinci Resolve
-  hardware.graphics = {
-    enable = true;
-    extraPackages = with pkgs; [
-      rocmPackages.clr.icd
-    ];
-  };
   # Docker
   virtualisation.docker.enable = true;
 
