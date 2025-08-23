@@ -54,12 +54,18 @@
 
   hardware.graphics = {
     enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
     # Fix Davinci Resolve
     extraPackages = with pkgs; [
-      mesa.opencl # Enables Rusticl (OpenCL) support
-      mesa.drivers
+      rocmPackages.clr.icd    # AMD OpenCL runtime
+      rocm-opencl-runtime     # (sometimes needed explicitly)
     ];
   };
+
+  hardware.opengl.extraPackages32 = with pkgs; [
+    driversi686Linux.amdvlk
+  ];
 
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
@@ -129,7 +135,7 @@
   ];
 
   environment.variables = {
-    RUSTICL_ENABLE = "radeonsi";
+    ROC_ENABLE_PRE_VEGA = "1";
   };
   # Docker
   virtualisation.docker.enable = true;
