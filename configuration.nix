@@ -53,6 +53,7 @@
     # Fix Davinci Resolve
     extraPackages = with pkgs; [
       rocmPackages.clr.icd
+      mesa.opencl # Enables Rusticl (OpenCL) support
     ];
   };
 
@@ -112,6 +113,10 @@
     git
     act
   ];
+
+  environment.variables = {
+    RUSTICL_ENABLE = "radeonsi";
+  };
 
   # Docker
   virtualisation.docker.enable = true;
