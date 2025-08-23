@@ -12,6 +12,16 @@
 }:
 {
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.initrd.kernelModules = [ "amdgpu" ];
+
+  # Make sure Xserver uses the `amdgpu` driver
+  services.xserver.enable = true;
+  services.xserver.videoDrivers = [ "amdgpu" ];
+
+  # Most software has the HIP libraries hard-coded. You can work around it on NixOS by using
+  systemd.tmpfiles.rules = [
+    "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
+  ];
 
   networking.hostName = "${hostName}";
 
@@ -112,12 +122,14 @@
     wireguard-tools
     git
     act
+    # verify that OpenCL is correctly setup
+    clinfo
   ];
 
   environment.variables = {
     RUSTICL_ENABLE = "radeonsi";
+    ROC_ENABLE_PRE_VEGA = "1";
   };
-
   # Docker
   virtualisation.docker.enable = true;
 
