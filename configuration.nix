@@ -12,11 +12,6 @@
 }:
 {
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.initrd.kernelModules = [ "amdgpu" ];
-
-  # Make sure Xserver uses the `amdgpu` driver
-  services.xserver.enable = true;
-  services.xserver.videoDrivers = [ "amdgpu" ];
 
   networking.hostName = "${hostName}";
 
@@ -59,10 +54,6 @@
       rocmPackages.clr.icd    # AMD OpenCL runtime
     ];
   };
-
-  hardware.opengl.extraPackages32 = with pkgs; [
-    driversi686Linux.amdvlk
-  ];
 
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
@@ -118,22 +109,8 @@
     nfs-utils
     wireguard-tools
     git
-    act
-    # verify that OpenCL is correctly setup
-    clinfo
-    # Davinci
-    (pkgs.davinci-resolve.override {
-      buildFHSEnv = a: (pkgs.buildFHSEnv (a // {
-        extraBwrapArgs = a.extraBwrapArgs ++ [
-          "--bind /run/opengl-driver/etc/OpenCL /etc/OpenCL"
-        ];
-      }));
-    })
   ];
 
-  environment.variables = {
-    ROC_ENABLE_PRE_VEGA = "1";
-  };
   # Docker
   virtualisation.docker.enable = true;
 
