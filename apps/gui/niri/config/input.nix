@@ -17,8 +17,7 @@
         dwt = true;
         natural-scroll = true;
         click-method = "clickfinger";
-        scroll-factor = 0.5;
-        accel-speed = 0.5;
+        scroll-factor = 0.34;
       };
       focus-follows-mouse = {
         enable = true;
