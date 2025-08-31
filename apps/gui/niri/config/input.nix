@@ -18,7 +18,7 @@
         natural-scroll = true;
         click-method = "clickfinger";
         scroll-factor = 0.34;
-        accel-speed = -0.5;
+        accel-speed = 0;
       };
       focus-follows-mouse = {
         enable = true;
