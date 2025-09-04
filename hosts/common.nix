@@ -54,7 +54,6 @@
     gcc
     qq
     youtube-music
-    animeko
     (symlinkJoin {
       name = "vesktop";
       paths = [ vesktop ];
