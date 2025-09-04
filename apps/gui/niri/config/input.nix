@@ -21,7 +21,7 @@
         accel-speed = 0;
       };
       trackpoint = {
-        accel-speed = 0;
+        accel-speed = -0.2;
       };
       focus-follows-mouse = {
         enable = false;
