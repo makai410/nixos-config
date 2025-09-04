@@ -218,8 +218,8 @@ in
     hostName = "e14-lnl";
     stateVersion = "25.05";
     profiles = [
-      "laptop",
-      "bootloader-systemd-boot",
+      "laptop"
+      "bootloader-systemd-boot"
       "niri"
       "steam"
       "zen-browser"
