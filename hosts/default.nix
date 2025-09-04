@@ -213,4 +213,28 @@ in
     extraHomeModules = [
     ];
   };
+
+  e14-lnl = mkHost {
+    hostName = "e14-lnl";
+    stateVersion = "25.05";
+    profiles = [
+      "laptop",
+      "bootloader-systemd-boot",
+      "niri"
+      "steam"
+      "zen-browser"
+      "chromium"
+      "obs"
+      "python"
+    ];
+    extraModules = [
+      # It's lunar lake
+      inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-13th-gen
+      {
+        my.stylix.wallpaper = "acane_washmachine";
+      }
+    ];
+    extraHomeModules = [
+    ];
+  };
 }
