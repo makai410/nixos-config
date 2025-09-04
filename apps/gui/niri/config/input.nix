@@ -20,8 +20,11 @@
         scroll-factor = 0.34;
         accel-speed = 0;
       };
+      trackpoint = {
+        accel-speed = 0;
+      };
       focus-follows-mouse = {
-        enable = true;
+        enable = false;
       };
     };
     cursor = {
