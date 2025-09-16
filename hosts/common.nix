@@ -54,6 +54,7 @@
     gcc
     qq
     youtube-music
+    typst
     (symlinkJoin {
       name = "vesktop";
       paths = [ vesktop ];
