@@ -24,6 +24,8 @@
   services.mpris-proxy.enable = true;
 
   home.packages = with pkgs; [
+    incus
+    gh
     brightnessctl
     btop
     cachix
@@ -55,6 +57,8 @@
     qq
     youtube-music
     typst
+    todesk
+    tinymist
     (symlinkJoin {
       name = "vesktop";
       paths = [ vesktop ];

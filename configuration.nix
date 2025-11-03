@@ -186,8 +186,11 @@
     registry.nixpkgs.flake = inputs.nixpkgs;
     channel.enable = false;
   };
-
   environment.etc."nix/inputs/nixpkgs".source = "${inputs.nixpkgs}";
+
+  virtualisation.incus = {
+    enable = true;
+  };
 
   zramSwap = {
     enable = true;
