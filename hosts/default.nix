@@ -143,6 +143,7 @@ let
                     ../apps/develop/lazygit/lazygit.nix
                     ../apps/develop/fish/fish.nix
                     ../apps/develop/kitty/kitty.nix
+                    ../apps/develop/tmux/tmux.nix
                     ../apps/develop/fastfetch/fastfetch.nix
                     ../apps/system/nnn/nnn.nix
                     ../apps/system/yazi/yazi.nix
