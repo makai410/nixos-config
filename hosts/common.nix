@@ -59,7 +59,6 @@
     typst
     todesk
     tinymist
-    rustdesk
     (symlinkJoin {
       name = "vesktop";
       paths = [ vesktop ];
