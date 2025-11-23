@@ -59,6 +59,7 @@
     typst
     todesk
     tinymist
+    ouch
     (symlinkJoin {
       name = "vesktop";
       paths = [ vesktop ];
