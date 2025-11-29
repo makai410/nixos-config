@@ -94,6 +94,7 @@
       "wheel"
       "video"
       "docker"
+      "libvirtd"
     ];
     shell = "${pkgs.fish}/bin/fish";
   };
@@ -110,6 +111,8 @@
     nfs-utils
     wireguard-tools
     git
+    virt-manager
+    qemu
   ];
 
   # Docker
@@ -188,9 +191,17 @@
   };
   environment.etc."nix/inputs/nixpkgs".source = "${inputs.nixpkgs}";
 
-  virtualisation.incus = {
+  # Enable libvirtd for VM management
+  virtualisation.libvirtd = {
     enable = true;
+    qemu = {
+      package = pkgs.qemu_kvm;
+      ovmf.enable = true;
+      runAsRoot = false;
+    };
   };
+
+  # Add your user to libvirtd group
 
   zramSwap = {
     enable = true;

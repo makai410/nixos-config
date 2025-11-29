@@ -24,7 +24,6 @@
   services.mpris-proxy.enable = true;
 
   home.packages = with pkgs; [
-    incus
     gh
     brightnessctl
     btop
