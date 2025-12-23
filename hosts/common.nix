@@ -25,7 +25,7 @@
 
   home.packages = with pkgs; [
     bun
-    nodejs_25
+    nodejs_24
     gh
     brightnessctl
     btop
