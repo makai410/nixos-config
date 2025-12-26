@@ -94,6 +94,7 @@
       "wheel"
       "video"
       "docker"
+      "kvm"
       "libvirtd"
     ];
     shell = "${pkgs.fish}/bin/fish";
@@ -113,6 +114,8 @@
     git
     virt-manager
     qemu
+    android-tools
+    android-studio-tools
   ];
 
   # Docker
