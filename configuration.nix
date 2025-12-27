@@ -96,6 +96,7 @@
       "docker"
       "kvm"
       "libvirtd"
+      "adbusers"
     ];
     shell = "${pkgs.fish}/bin/fish";
   };
@@ -116,6 +117,7 @@
     qemu
     android-tools
     android-studio-tools
+    android-studio
   ];
 
   # Docker
