@@ -97,6 +97,7 @@
       "kvm"
       "libvirtd"
       "adbusers"
+      "waydroid"
     ];
     shell = "${pkgs.fish}/bin/fish";
   };
@@ -204,6 +205,9 @@
       runAsRoot = false;
     };
   };
+
+  # Enable waydroid
+  virtualisation.waydroid.enable = true;
 
   # Add your user to libvirtd group
 
