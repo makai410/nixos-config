@@ -10,40 +10,51 @@
   stateVersion,
   ...
 }: {
-  nixpkgs = {
-    # You can add overlays here
-    overlays = [
-      # Add overlays your own flake exports (from overlays and pkgs dir):
-      inputs.self.overlays.additions
-      inputs.self.overlays.modifications
+  services.gnome.gnome-keyring.enable = true;
+  services.fstrim.enable = true;
+  services.journald.extraConfig = ''
+    SystemMaxUse=50M
+    SystemMaxFileSize=10M
+    RuntimeMaxUse=50M
+    RuntimeMaxFileSize=10M
+  '';
+  services.gvfs.enable = true;
 
-      # You can also add overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
-    ];
-    # Configure your nixpkgs instance
-    config = {
-      # Disable if you don't want unfree packages
-      allowUnfree = true;
-    };
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  # programs.mtr.enable = true;
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
   };
 
   nix = let
     flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
   in {
     settings = {
+      substituters = [
+        "https://mirror.sjtu.edu.cn/nix-channels/store" # SJTU
+        "https://mirrors.ustc.edu.cn/nix-channels/store" # USTC
+        "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" # Tsinghua
+        "https://cache.nixos.org"
+      ];
+      trusted-public-keys = [
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      ];
+      trusted-users = [
+        "root"
+        "${user}"
+      ];
       # Enable flakes and new 'nix' command
       experimental-features = "nix-command flakes";
-      # Opinionated: disable global registry
-      flake-registry = "";
       # Workaround for https://github.com/NixOS/nix/issues/9574
       nix-path = config.nix.nixPath;
+    };
+
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
     };
     # Opinionated: disable channels
     channel.enable = false;
@@ -70,6 +81,7 @@
     ];
     # TODO: Be sure to add any other groups you need (such as networkmanager, audio, docker, etc)
     extraGroups = ["wheel"];
+    shell = "${pkgs.fish}/bin/fish";
   };
 
   # This setups a SSH server. Very important if you're setting up a headless system.
@@ -91,9 +103,6 @@
     hibernate.enable = lib.mkDefault true;
     hybrid-sleep.enable = lib.mkDefault true;
   };
-
-  # Intel CPU
-  hardware.cpu.intel.updateMicrocode = true;
 
   # Intel GPU (Arc/Xe)
   services.xserver.videoDrivers = [ "modesetting" ];

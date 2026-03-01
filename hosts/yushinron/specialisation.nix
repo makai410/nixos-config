@@ -2,14 +2,11 @@
   lib,
   config,
   pkgs,
-  modules,
 }:
 {
   # Desktop mode
   specialisation = {
     desktop.configuration = {
-      imports = modules;
-
       # This tag will show up in your bootloader menu
       system.nixos.tags = [ "desktop-gui" ];
 

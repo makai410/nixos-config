@@ -17,5 +17,9 @@
     NIX_PROFILES =
       "${lib.concatStringsSep " " (lib.reverseList config.environment.profiles)}";
     XMODIFIERS = "@im=fcitx";
+    QT_IM_MODULE = "fcitx";
+    GTK_IM_MODULE = "fcitx";
+    SDL_IM_MODULE = "fcitx";
+    GLFW_IM_MODULE = "ibus"; # for some apps
   };
 }

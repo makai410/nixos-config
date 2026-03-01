@@ -26,9 +26,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # NixOS hardware
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-
     # Niri flake
     niri = {
       url = "github:sodiboo/niri-flake";
@@ -38,6 +35,12 @@
     # Catppuccin theme
     catppuccin = {
       url = "github:catppuccin/nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Rust toolchains and rust-analyzer nightly for Nix
+    fenix = {
+      url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -77,14 +80,6 @@
 
     # Your custom packages and modifications, exported as overlays
     overlays = import ./overlays {inherit inputs;};
-
-    # Reusable nixos modules you might want to export
-    # These are usually stuff you would upstream into nixpkgs
-    nixosModules = import ./modules/nixos;
-
-    # Reusable home-manager modules you might want to export
-    # These are usually stuff you would upstream into home-manager
-    homeManagerModules = import ./modules/home-manager;
 
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild --flake .#your-hostname'

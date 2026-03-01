@@ -2,37 +2,25 @@
   pkgs,
   user,
   stateVersion,
+  inputs,
   ...
 }:
 {
   # Shared packages
   home.packages = with pkgs; [
+    btop
+    htop
+    gh
+    telegram-desktop
+    zulip
+    clash-verge-rev
+    zotero_7
+    qq
+    tinymist
+    typst
+    ouch
+    vesktop
   ];
-
-  nixpkgs = {
-    # You can add overlays here
-    overlays = [
-      # Add overlays your own flake exports (from overlays and pkgs dir):
-      inputs.self.overlays.additions
-      inputs.self.overlays.modifications
-      
-      # You can also add overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-      inputs.niri.overlays.niri
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
-    ];
-    # Configure your nixpkgs instance
-    config = {
-      # Disable if you don't want unfree packages
-      allowUnfree = true;
-    };
-  };
 
   home.username = user;
   home.homeDirectory = "/home/${user}";

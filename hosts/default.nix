@@ -39,8 +39,6 @@ let
         { my.stylix.wallpaper = "acane_washmachine"; }
       ];
     };
-
-    #TODO: nix-on-droid :))))
   };
 in
 {
@@ -56,11 +54,14 @@ in
         stateVersion = hostConfig.stateVersion;
       };
       modules = [
+        inputs.self.overlays
         ../hosts/${hostName}/configuration.nix
         ../hosts/${hostName}/hardware-configuration.nix
+        ../modules/system/font.nix
         ../modules/services/bluetooth.nix
         ../modules/services/dae.nix
         ../modules/services/fcitx5.nix
+        ../modules/fenix/default.nix
       ]
       ++ (getSystemModules hostConfig.profiles)
       ++ hostConfig.extraSystemModules;
@@ -82,6 +83,7 @@ in
           selectedProfiles = hostConfig.profiles;
         };
         modules = [
+          inputs.self.overlays
           ../hosts/hm-manager.nix
           ../hosts/${hostName}/home.nix
         ]
