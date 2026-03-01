@@ -27,6 +27,11 @@ let
           ./apps/udiskie/udiskie.nix
         ];
       };
+      easytier = {
+        system = [
+          ./apps/easytier/default.nix
+        ];
+      };
     };
   };
 in modules //

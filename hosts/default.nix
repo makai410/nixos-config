@@ -20,7 +20,7 @@ let
         "catppuccin"
       ];
       extraSystemModules = [
-        { my.stylix.wallpaper = "acane_washmachine"; }
+        { services.easytier.instances.common.ipv4 = "10.144.144.10"; }
       ];
     };
 
@@ -36,7 +36,7 @@ let
         "catppuccin"
       ];
       extraSystemModules = [
-        { my.stylix.wallpaper = "acane_washmachine"; }
+        { services.easytier.instances.common.ipv4 = "10.144.144.11"; }
       ];
     };
   };

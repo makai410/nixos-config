@@ -1,6 +1,5 @@
-{ pkgs, user, ... }:
+{ pkgs, ... }:
 {
-  home.packages = with pkgs; [ nvd ];
   programs.fish = {
     enable = true;
 
@@ -23,6 +22,9 @@
         end
       end
     '';
+    shellAliases = {
+      server = "ssh makai@10.144.144.10";
+    };
 
     plugins = [
       {
