@@ -5,22 +5,13 @@
   lib,
   config,
   pkgs,
+  user,
+  hostName,
+  stateVersion,
   ...
 }: {
-  # You can import other NixOS modules here
   imports = [
-    # If you want to use modules your own flake exports (from modules/nixos):
-    # inputs.self.nixosModules.example
-
-    # Or modules from other flakes (such as nixos-hardware):
-    # inputs.hardware.nixosModules.common-cpu-amd
-    # inputs.hardware.nixosModules.common-ssd
-
-    # You can also split up your configuration and import pieces of it here:
-    # ./users.nix
-
-    # Import your generated (nixos-generate-config) hardware configuration
-    ./hardware-configuration.nix
+    ./specialisation.nix
   ];
 
   nixpkgs = {
@@ -29,7 +20,6 @@
       # Add overlays your own flake exports (from overlays and pkgs dir):
       inputs.self.overlays.additions
       inputs.self.overlays.modifications
-      inputs.self.overlays.unstable-packages
 
       # You can also add overlays exported from other flakes:
       # neovim-nightly-overlay.overlays.default
@@ -69,24 +59,21 @@
 
   # FIXME: Add the rest of your current configuration
 
-  # TODO: Set your hostname
-  networking.hostName = "your-hostname";
+  networking.hostName = "${hostName}";
 
+  users.mutableUsers = lib.mkDefault true;
   # TODO: Configure your system-wide user settings (groups, etc), add more users as needed.
-  users.users = {
-    # FIXME: Replace with your username
-    your-username = {
-      # TODO: You can set an initial password for your user.
-      # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
-      # Be sure to change it (using passwd) after rebooting!
-      initialPassword = "correcthorsebatterystaple";
-      isNormalUser = true;
-      openssh.authorizedKeys.keys = [
-        # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
-      ];
-      # TODO: Be sure to add any other groups you need (such as networkmanager, audio, docker, etc)
-      extraGroups = ["wheel"];
-    };
+  users.users.${user} = {
+    # TODO: You can set an initial password for your user.
+    # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
+    # Be sure to change it (using passwd) after rebooting!
+    initialPassword = "correcthorsebatterystaple";
+    isNormalUser = true;
+    openssh.authorizedKeys.keys = [
+      # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
+    ];
+    # TODO: Be sure to add any other groups you need (such as networkmanager, audio, docker, etc)
+    extraGroups = ["wheel"];
   };
 
   # This setups a SSH server. Very important if you're setting up a headless system.
@@ -102,6 +89,25 @@
     };
   };
 
+  # Disable all sleep/suspend/hibernate targets by default
+  systemd.targets = {
+    sleep.enable = lib.mkDefault false;
+    suspend.enable = lib.mkDefault false;
+    hibernate.enable = lib.mkDefault false;
+    hybrid-sleep.enable = lib.mkDefault false;
+  };
+
+  # AMD CPU
+  hardware.cpu.amd.updateMicrocode = true;
+
+  # AMD GPU
+  services.xserver.videoDrivers = [ "amdgpu" ];
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
+  };
+
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  system.stateVersion = "23.05";
+  system.stateVersion = "${stateVersion}";
 }
