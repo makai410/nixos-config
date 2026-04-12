@@ -1,18 +1,14 @@
 # This is your system's configuration file.
 # Use this to configure your system environment (it replaces /etc/nixos/configuration.nix)
 {
-  inputs,
   lib,
-  config,
   pkgs,
   user,
-  hostName,
   stateVersion,
   ...
 }: {
-  imports = [
-    ./specialisation.nix
-  ];
+  time.timeZone = "Asia/Shanghai";
+  console.keyMap = "us";
 
   services.gnome.gnome-keyring.enable = true;
   services.fstrim.enable = true;
@@ -32,45 +28,7 @@
     enableSSHSupport = true;
   };
 
-  nix = let
-    flakeInputs = lib.filterAttrs (_: lib.isType "flake") inputs;
-  in {
-    settings = {
-      substituters = [
-        "https://mirror.sjtu.edu.cn/nix-channels/store" # SJTU
-        "https://mirrors.ustc.edu.cn/nix-channels/store" # USTC
-        "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" # Tsinghua
-        "https://cache.nixos.org"
-      ];
-      trusted-public-keys = [
-        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-      ];
-      trusted-users = [
-        "root"
-        "${user}"
-      ];
-      # Enable flakes and new 'nix' command
-      experimental-features = "nix-command flakes";
-      # Workaround for https://github.com/NixOS/nix/issues/9574
-      nix-path = config.nix.nixPath;
-    };
-
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
-    };
-    # Opinionated: disable channels
-    channel.enable = false;
-
-    # Opinionated: make flake registry and nix path match flake inputs
-    registry = lib.mapAttrs (_: flake: {inherit flake;}) flakeInputs;
-    nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
-  };
-
   # FIXME: Add the rest of your current configuration
-
-  networking.hostName = "${hostName}";
 
   users.mutableUsers = lib.mkDefault true;
   # TODO: Configure your system-wide user settings (groups, etc), add more users as needed.
@@ -88,19 +46,6 @@
     shell = "${pkgs.fish}/bin/fish";
   };
 
-  # This setups a SSH server. Very important if you're setting up a headless system.
-  # Feel free to remove if you don't need it.
-  services.openssh = {
-    enable = true;
-    settings = {
-      # Opinionated: forbid root login through SSH.
-      PermitRootLogin = "no";
-      # Opinionated: use keys only.
-      # Remove if you want to SSH using passwords
-      PasswordAuthentication = false;
-    };
-  };
-
   # Disable all sleep/suspend/hibernate targets by default
   systemd.targets = {
     sleep.enable = lib.mkDefault false;
@@ -110,12 +55,7 @@
   };
 
   # AMD GPU
-  services.xserver.videoDrivers = [ "amdgpu" ];
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-  };
+  services.xserver.videoDrivers = ["amdgpu"];
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "${stateVersion}";

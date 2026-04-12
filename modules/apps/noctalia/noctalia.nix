@@ -1,13 +1,25 @@
-{ pkgs, inputs, ... }:
 {
+  inputs,
+  user,
+  ...
+}: {
+  imports = [
+    inputs.noctalia.homeModules.default
+  ];
   programs.noctalia-shell = {
     enable = true;
     settings = {
       # configure noctalia here
       bar = {
-        density = "compact";
-        position = "right";
-        showCapsule = false;
+        density = "default";
+        position = "top";
+        showCapsule = true;
+        backgroundOpacity = 0.93;
+        marginVertical = 4;
+        marginHorizontal = 4;
+        frameThickness = 8;
+        frameRadius = 12;
+        outerCorners = true;
         widgets = {
           left = [
             {
@@ -44,9 +56,9 @@
           ];
         };
       };
-      colorSchemes.predefinedScheme = "Monochrome";
+      colorSchemes.predefinedScheme = "Catppuccin-Lavender";
       general = {
-        avatarImage = "/home/drfoobar/.face";
+        avatarImage = "/home/${user}/.face";
         radiusRatio = 0.2;
       };
       location = {

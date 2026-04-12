@@ -10,9 +10,9 @@
       };
 
       preset-column-widths = [
-        { proportion = 1. / 3.; }
-        { proportion = 1. / 2.; }
-        { proportion = 2. / 3.; }
+        {proportion = 1. / 3.;}
+        {proportion = 1. / 2.;}
+        {proportion = 2. / 3.;}
       ];
 
       border = {
@@ -24,11 +24,12 @@
         enable = true;
         draw-behind-window = false;
         softness = 15;
-        spread = 6;
+        spread = 10;
       };
 
       tab-indicator.hide-when-single-tab = true;
-    };
 
+      background-color = "transparent";
+    };
   };
 }

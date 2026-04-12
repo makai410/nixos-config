@@ -9,9 +9,6 @@
           layout = "us";
         };
       };
-      mouse = {
-        accel-speed = -0.5;
-      };
       touchpad = {
         tap = true;
         dwt = true;
@@ -21,7 +18,7 @@
         accel-speed = 0;
       };
       trackpoint = {
-        accel-speed = -0.2;
+        accel-speed = -0.3;
       };
       focus-follows-mouse = {
         enable = false;

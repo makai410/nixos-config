@@ -2,10 +2,8 @@
   pkgs,
   user,
   stateVersion,
-  inputs,
   ...
-}:
-{
+}: {
   # Shared packages
   home.packages = with pkgs; [
     btop
@@ -18,8 +16,20 @@
     qq
     tinymist
     typst
-    ouch
     vesktop
+    vscode
+    pear-desktop
+    bitwarden
+    bitwarden-cli
+    (prismlauncher.override {
+      # Change Java runtimes available to Prism Launcher
+      jdks = [
+        graalvmPackages.graalvm-ce
+        zulu8
+        zulu17
+        zulu
+      ];
+    })
   ];
 
   home.username = user;
@@ -33,7 +43,7 @@
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = hostConfig.stateVersion;
+  home.stateVersion = stateVersion;
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

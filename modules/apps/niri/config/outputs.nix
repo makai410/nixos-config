@@ -9,6 +9,10 @@
       # Thinkpad e14 Gen7 LunarLake
       "China Star Optoelectronics Technology Co., Ltd MNE007ZA3-4 Unknown" = {
         scale = 2.0;
+        position = {
+          x = 0;
+          y = 0;
+        };
         mode = {
           height = 1800;
           width = 2880;

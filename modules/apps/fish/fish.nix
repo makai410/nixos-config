@@ -1,5 +1,5 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
+  home.packages = with pkgs; [nvd];
   programs.fish = {
     enable = true;
 
@@ -23,19 +23,15 @@
       end
     '';
     shellAliases = {
-      server = "ssh makai@10.144.144.10";
+      y = "yazi";
+      gca = "git commit --amend";
     };
-
     plugins = [
       {
-        name = "bobthefish";
-        src = pkgs.fetchFromGitHub {
-          owner = "oh-my-fish";
-          repo = "theme-bobthefish";
-          rev = "c2c47dc964a257131b3df2a127c2631b4760f3ec";
-          sha256 = "sha256-LB4g+EA3C7OxTuHfcxfgl8IVBe5NufFc+5z9VcS0Bt0=";
-        };
+        name = "tide";
+        src = pkgs.fishPlugins.tide.src;
       }
     ];
   };
+  programs.man.generateCaches = false;
 }

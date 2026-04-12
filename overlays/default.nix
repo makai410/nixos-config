@@ -1,6 +1,5 @@
 # This file defines overlays
-{inputs, ...}:
-let
+{inputs, ...}: let
   # This one brings our custom packages from the 'pkgs' directory
   additions = final: _prev: import ../pkgs final.pkgs;
 
@@ -8,24 +7,27 @@ let
   # You can change versions, add patches, set compilation flags, anything really.
   # https://nixos.wiki/wiki/Overlays
   modifications = final: prev: {
-    qq = prev.qq.override { commandLineArgs = [ "--wayland-text-input-version=3" "--enable-wayland-ime" ]; };
-    vesktop = prev.vesktop.override { commandLineArgs = [ "--wayland-text-input-version=3" "--enable-wayland-ime" ]; };
+    vesktop = prev.vesktop.override {commandLineArgs = ["--wayland-text-input-version=3" "--enable-wayland-ime"];};
+    steam = prev.steeam.override {commandLineArgs = ["--wayland-text-inout-version=3" "--enable-wayland-ime"];};
+    noctalia-shell = prev.noctalia-shell.override {calendarSupport = true;};
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
     # });
   };
-in
-{
+in {
   nixpkgs.overlays = [
     additions
     modifications
     inputs.niri.overlays.niri
     inputs.fenix.overlays.default
+    inputs.nix-minecraft.overlay
 
     # Configure your nixpkgs instance
-    config = {
-      # Disable if you don't want unfree packages
-      allowUnfree = true;
-    };
+    {
+      config = {
+        # Disable if you don't want unfree packages
+        allowUnfree = true;
+      };
+    }
   ];
 }

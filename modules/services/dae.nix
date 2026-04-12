@@ -1,67 +1,130 @@
-{ ... }:
 {
+  config,
+  user,
+  ...
+}: {
   services.dae = {
     enable = true;
-    config = ''
-      global {
-        wan_interface: auto
-        log_level: info
-        dial_mode: domain
-      #  allow_insecure: false
-        auto_config_kernel_parameter: true
+    configFile = toString ./dae/config.dae;
+  };
+
+  sops.templates."config.dae".owner = user;
+  sops.templates."config.dae".content = ''
+    global {
+      log_level: warn
+
+      tporxy_port: 12345
+      allow_insecure: false
+      check_interval: 30s
+      check_tolerance: 50ms
+
+      wan_interface: auto
+
+      udp_check_dns: 'dns.google.com:53,8.8.8.8,2001:4860:4860::8888'
+      tcp_check_url: 'http://cp.cloudflare.com,1.1.1.1,2606:4700:4700::1111'
+
+      dial_mode: domain
+      tcp_check_http_method: HEAD
+      disable_waiting_network: true
+      auto_config_kernel_parameter: true
+      sniffing_timeout: 100ms
+      tls_implementation: tls
+      utls_imitate: chrome_auto
+      tproxy_port_protect: true
+      so_mark_from_dae: 0
+    }
+
+    subscription {
+      kch: '${config.sops.placeholder.proxy-sub-v2ray}'
+    }
+
+    dns {
+      upstream {
+        googledns: 'tcp+udp://dns.google:53'
+        alidns: 'udp://dns.alidns.com:53'
+        dohalidns: 'h3://dns.alidns.com:443'
+        dohgoogledns: 'h3://dns.google/dns-query'
       }
-      node {
-        clash: 'socks5://127.0.0.1:7891'
-      }
-      dns {
-        upstream {
-          googledns: 'tcp+udp://dns.google:53'
-          alidns: 'udp://dns.alidns.com:53'
-        }
-        routing {
-          request {
-            qtype(https) -> reject
-            fallback: alidns
-          }
-          response {
-            upstream(googledns) -> accept
-            ip(geoip:private) && !qname(geosite:cn) -> googledns
-            fallback: accept
-          }
-        }
-      }
-      group {
-        clash {
-          policy: fixed(0)
-        }
-      }
-      # 更多的 Routing 样例见 https://github.com/daeuniverse/dae/blob/main/docs/en/configuration/routing.md
       routing {
-        pname(NetworkManager) -> direct
-        dip(224.0.0.0/3, 'ff00::/8') -> direct
-        dip(119.29.29.29) -> must_direct
-
-        pname(clash) -> must_direct
-        pname(clash-verge) -> must_direct
-        pname(verge-mihomo) -> must_direct
-        pname(clash-verge-rev) -> must_direct
-        pname(clash-meta) -> must_direct
-        pname(mihomo) -> must_direct
-        pname(qemu-system-x86) -> must_direct
-
-        domain(suffix: bing.com) -> clash
-        domain(suffix: wikipedia.org) -> clash
-        domain(suffix: github.com) -> clash
-        domain(geosite:github) -> clash
-        domain(suffix: static.rust-lang.org) -> clash
-        domain(suffix: steampowered.com) -> clash
-
-        dport(22) -> direct
-
-        dip(geoip:private) -> direct
-
-        fallback: clash
+        request {
+          qname(geosite:cn) -> dohalidns
+          fallback: dohgoogledns
+        }
       }
-    '';
-  };                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+    }
+
+    group {
+      proxy {
+        policy: min_moving_avg
+        filter: subtag(kch) && name(keyword: '美国 9929 01')
+      }
+    }
+
+    routing {
+      # Network managers in localhost should be direct to avoid false negative network connectivity check when binding to
+      # WAN.
+      pname(NetworkManager) -> direct(must)
+      pname(mosdns) && l4proto(udp) && dport(5333) -> direct(must)
+      pname(ql) -> direct
+      dscp(4) -> direct
+
+      ### LAN & Private Check
+      # Put it in the front to prevent broadcast, multicast and other packets that should be sent to the LAN from being forwarded by the proxy.
+      dip(224.0.0.0/3, 'ff00::/8') -> direct
+      dip(geoip:private) -> direct
+
+      ### Proxy software
+      pname(clash) -> must_direct
+      pname(clash-verge) -> must_direct
+      pname(verge-mihomo) -> must_direct
+      pname(clash-verge-rev) -> must_direct
+      pname(clash-meta) -> must_direct
+      pname(mihomo) -> must_direct
+      pname(qemu-system-x86) -> must_direct
+
+      ### Tencent
+      domain(suffix: cdn-go.cn) -> direct
+      domain(suffix: smtcdns.com) -> direct
+      domain(suffix: smtcdns.net) -> direct
+      domain(geosite:tencent) -> direct
+
+      ### CN Direct Services
+      domain(geosite:alibaba) -> direct
+      domain(geosite:apple@cn) -> direct
+      domain(geosite:microsoft@cn) -> direct
+      domain(geosite:steam@cn) -> direct
+      domain(suffix: cm.steampowered.com) -> direct
+      domain(suffix: steamserver.net) -> direct
+
+      ### Social
+      domain(geosite:telegram) -> proxy
+      dip(geoip:telegram) -> proxy
+      domain(geosite:twitter) -> proxy
+      domain(geosite:meta) -> proxy
+
+      ### Dev
+      domain(geosite:github) -> proxy
+      domain(geosite:docker) -> proxy
+      domain(suffix: gradle.org) -> proxy
+      domain(suffix: linux.do) -> proxy
+      domain(suffix: bing.com) -> proxy
+      domain(suffix: wikipedia.org) -> proxy
+      domain(suffix: static.rust-lang.org) -> proxy
+
+      ### Google
+      domain(geosite:google) -> proxy
+
+      # dport(22) -> direct
+
+      ### 禁用Quic, 避免CPU高负载及内存泄露
+      l4proto(udp) && dport(443) -> block
+
+      ### Fallbacks
+      domain(geosite:geolocation-!cn) -> proxy
+      domain(geosite:cn) -> direct
+      dip(geoip:cn) -> direct
+
+      fallback: proxy
+    }
+  '';
 }

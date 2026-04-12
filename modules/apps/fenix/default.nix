@@ -1,13 +1,12 @@
-{ inputs, pkgs, ... }:
-{
-  environment.systemPackages = [
-    (pkgs.fenix.complete.withComponents [
+{pkgs, ...}: {
+  environment.systemPackages = with pkgs; [
+    (fenix.complete.withComponents [
       "cargo"
       "clippy"
       "rust-src"
       "rustc"
       "rustfmt"
     ])
-    pkgs.rust-analyzer-nightly
+    rust-analyzer-nightly
   ];
 }

@@ -1,48 +1,105 @@
 {
   lib,
   inputs,
-}:
-let
+  ...
+}: let
   modules = {
+    # Mdoules related to system/services
     laptop = {
       system = [
         ./services/laptop.nix
-        ./services/laptop-tlp.nix
       ];
-      bootloader-systemd-boot = {
-        system = [
-          ./services/bootloader-systemd-boot.nix
-        ];
-      };
-      catppuccin = {
-        home = [
-          inputs.catppuccin.homeModules.catppuccin
-        ];
-      };
-      udiskie = {
-        system = [
-          ./apps/udiskie/default.nix
-        ];
-        home = [
-          ./apps/udiskie/udiskie.nix
-        ];
-      };
-      easytier = {
-        system = [
-          ./apps/easytier/default.nix
-        ];
-      };
+    };
+    desktop = {
+      system = [
+        ./system/bluetooth.nix
+        ./system/hibernate.nix
+        ./services/pipewire.nix
+        ./services/ppd.nix
+      ];
+      home = [
+      ];
+    };
+    headless-server = {
+      system = [
+        ./system/headless-server.nix
+      ];
+    };
+    bootloader-systemd-boot = {
+      system = [
+        ./system/bootloader-systemd-boot.nix
+      ];
+    };
+    dae = {
+      system = [
+        ./services/dae.nix
+      ];
+    };
+    # User apps
+    alacritty = {
+      home = [
+        ./apps/alacritty/alacritty.nix
+      ];
+    };
+    catppuccin = {
+      home = [
+        inputs.catppuccin.homeModules.catppuccin
+        ./apps/catppuccin/catppuccin.nix
+      ];
+    };
+    udiskie = {
+      system = [
+        ./apps/udiskie/default.nix
+      ];
+      home = [
+        ./apps/udiskie/udiskie.nix
+      ];
+    };
+    easytier = {
+      system = [
+        ./apps/easytier/default.nix
+      ];
+    };
+    gitui = {
+      home = [
+        ./apps/gitui/gitui.nix
+      ];
+    };
+    ssh = {
+      home = [
+        ./apps/ssh/ssh.nix
+      ];
+    };
+    steam = {
+      system = [
+        ./apps/steam/default.nix
+      ];
+      home = [
+        ./apps/steam/steam.nix
+      ];
     };
   };
-in modules //
-{
-  getSystemModules = profiles: lib.concatMap (profile:
-    if modules ? ${profile} && modules.${profile} ? system 
-    then modules.${profile}.system else []
-  ) profiles;
+in
+  modules
+  // {
+    getSystemModules = profiles:
+      lib.concatMap (
+        profile:
+          profile.system or []
+      )
+      profiles;
 
-  getHomeModules = profiles: lib.concatMap (profile:
-    if modules ? ${profile} && modules.${profile} ? home 
-    then modules.${profile}.home else []
-  ) profiles;
-}
+    getHomeModules = profiles:
+      lib.concatMap (
+        profile:
+          profile.home or []
+      )
+      profiles;
+
+    commonApps = with modules; [
+      alacritty
+      catppuccin
+      easytier
+      niri
+    ];
+  }

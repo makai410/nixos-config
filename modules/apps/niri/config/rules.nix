@@ -1,20 +1,44 @@
 {
   programs.niri.settings = {
+    layout-rules = [
+      {
+        matches = [
+          {namespace = "^noctalia-overview";}
+        ];
+        place-within-backdrop = true;
+      }
+
+      # FIXME: Wait for niri to support blur
+      # {
+      #   matches = [
+      #     { namespace = "^noctalia-(background|launcher-overlay|dock)-.*$"; }
+      #   ];
+      #   background-effect = {
+      #     xray = false;
+      #   };
+      # }
+    ];
     window-rules = [
       # Global rules
       {
-        geometry-corner-radius =
-          let
-            r = 12.0;
-          in
-          {
-            top-left = r;
-            top-right = r;
-            bottom-left = r;
-            bottom-right = r;
-          };
+        geometry-corner-radius = let
+          r = 20.0;
+        in {
+          top-left = r;
+          top-right = r;
+          bottom-left = r;
+          bottom-right = r;
+        };
         clip-to-geometry = true;
       }
+
+      # FIXME: Wait for niri to support blur
+      # {
+      #   background-effect = {
+      #     blur = true;
+      #     xray = false;
+      #   };
+      # }
 
       {
         matches = [
@@ -26,18 +50,40 @@
       {
         matches = [
           {
-            is-window-cast-target = true;
+            app-id = "firefox";
+            title = "Picture-in-Picture";
+          }
+
+          {
+            app-id = "steam";
+            title = "Friends List";
+          }
+
+          {
+            app-id = "steam";
+            title = "Steam Settings";
           }
         ];
+        open-floating = true;
+      }
+
+      {
+        matches = [
+          {is-window-cast-target = true;}
+        ];
         focus-ring = {
-          active.color = "#DA70D6";
+          active.color = "#f38ba8";
+          inactive.color = "#7d0d2d";
+        };
+        border = {
+          inactive.color = "#7d0d2d";
         };
         shadow = {
-          color = "#da70d66b";
+          color = "#7d0d2d70";
         };
         tab-indicator = {
           active.color = "#f38ba8";
-          inactive.color = "#da70d66b";
+          inactive.color = "#7d0d2d";
         };
       }
 
@@ -48,58 +94,10 @@
 
       {
         matches = [
-          { app-id = "^(vesktop)$"; }
-          { app-id = "zen"; }
+          {app-id = "^(vesktop)$";}
         ];
         open-maximized = true;
       }
-
-      {
-        matches = [
-          {
-            app-id = "zen";
-            title = "Picture-in-Picture";
-          }
-        ];
-        open-floating = true;
-        default-floating-position = {
-          x = 32;
-          y = 32;
-          relative-to = "bottom-right";
-        };
-        default-column-width = {fixed = 480;};
-        default-window-height = {fixed = 270;};
-      }
-
-      {
-        matches = [{title = "Picture in picture";}];
-        open-floating = true;
-        default-floating-position = {
-          x = 32;
-          y = 32;
-          relative-to = "bottom-right";
-        };
-      }
-
-      {
-        # Sound control
-        matches = [
-          { app-id = "^org\.pulseaudio\.pavucontrol$"; }
-        ];
-        default-column-width = {
-          proportion = 0.50;
-        };
-        default-window-height = {
-          fixed = 500;
-        };
-        open-floating = true;
-        default-floating-position = {
-          x = 0;
-          y = 0;
-          relative-to = "top-right";
-        };
-      }
-
     ];
   };
 }

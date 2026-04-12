@@ -1,0 +1,10 @@
+keys:
+  # TODO: generate age keys from the ssh key on youshinron.
+  # - &youshinron age1...   # Home PC
+  - &byoushinwo age1v997wz9h0g503wu0a4mfrf74k4ve6achegt2kz5d7wc9nn7s3yas946877 # Thinkpad laptop
+creation_rules:
+  - path_regex: secrets/.*\.(yaml|json)$
+    key_groups:
+      - age:
+        # - *youshinron
+        - *byoushinwo

@@ -18,6 +18,6 @@
     };
   };
 
-  networking.firewall.allowedTCPPorts =[ 11010 ];
-  networking.firewall.allowedUDPPorts =[ 11010 ];
+  networking.firewall.allowedTCPPorts = [11010];
+  networking.firewall.allowedUDPPorts = [11010];
 }

@@ -1,5 +1,8 @@
-{ pkgs, config, ...}:
 {
+  pkgs,
+  config,
+  ...
+}: {
   imports = [
     ./config/binds.nix
     ./config/outputs.nix
@@ -10,18 +13,7 @@
 
   home.packages = with pkgs; [
     xwayland-satellite
-    swaybg
-    libnotify
-    pamixer
   ];
-  home.file = {
-    "scripts".source = pkgs.fetchFromGitHub {
-      owner = "dbeley";
-      repo = "scripts";
-      rev = "a8607fbfb8c50543629e14ec483473459229091d";
-      sha256 = "XBumWlu4+z/jTKLK71Lr0hMeLhc43XD3oEzY+YUMzN4=";
-    };
-  };
   programs.niri = {
     enable = true;
     package = pkgs.niri-unstable;
@@ -29,36 +21,29 @@
     settings = {
       environment = {
         "NIXOS_OZONE_WL" = "1";
-        "DISPLAY" = ":0";
-        "EDITOR" = "nvim";
+        "EDITOR" = "hx";
       };
 
-      screenshot-path = "~/Pictures/Captures-Niri/%Y-%m-%d %H-%M-%S.png";
+      # Seems like we no longer need to manually configure xwayland here.
 
-      spawn-at-startup = [
-        {
-          command = [ "waybar" ];
-        }
-        {
-          command = [ "mako" ];
-        }
-        {
-          command = [ "xwayland-satellite" ];
-        }
-        {
-          command = [
-            "swaybg"
-            "-m"
-            "fill"
-            "-i"
-            "${config.stylix.image}"
-          ];
-        }
-      ];
+      screenshot-path = "~/Pictures/Captures-Niri/%Y-%m-%d %H-%M-%S.png";
 
       hotkey-overlay = {
         skip-at-startup = true;
       };
+
+      spawn-at-startup = [
+        {
+          command = [
+            "noctalia-shell"
+          ];
+        }
+      ];
+    };
+
+    debug = {
+      # Allows notification actions and window activation from Noctalia.
+      honor-xdg-activation-with-invalid-serial = [];
     };
   };
 }

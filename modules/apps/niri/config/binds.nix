@@ -1,45 +1,28 @@
-{ config, ... }:
 {
+  config,
+  lib,
+  ...
+}: let
+  noctalia = cmd:
+    [
+      "noctalia-shell"
+      "ipc"
+      "call"
+    ]
+    ++ (lib.splitString " " cmd);
+in {
   programs.niri.settings = {
     binds = with config.lib.niri.actions; {
       "Mod+Shift+Slash".action = show-hotkey-overlay;
-      "XF86AudioRaiseVolume".action.spawn = [
-        "~/scripts/volume_pamixer.sh"
-        "up"
-      ];
-      "XF86AudioLowerVolume".action.spawn = [
-        "~/scripts/volume_pamixer.sh"
-        "down"
-      ];
-      "XF86AudioMute".action.spawn = [
-        "~/scripts/volume_pamixer.sh"
-        "mute"
-      ];
-      "Shift+XF86AudioRaiseVolume".action.spawn = [
-        "~/scripts/volume_pamixer.sh"
-        "bigup"
-      ];
-      "Shift+XF86AudioLowerVolume".action.spawn = [
-        "~/scripts/volume_pamixer.sh"
-        "bigdown"
-      ];
-      "XF86MonBrightnessDown".action.spawn = [
-        "brightnessctl"
-        "s"
-        "5%-"
-      ];
-      "XF86MonBrightnessUp".action.spawn = [
-        "brightnessctl"
-        "s"
-        "+5%"
-      ];
-      "XF86Display".action.spawn = [
-        "~/scripts/toggle_gammastep.sh"
-      ];
+      "XF86AudioRaiseVolume".action.spawn = noctalia "volume increase";
+      "XF86AudioLowerVolume".action.spawn = noctalia "volume decrease";
+      "XF86AudioMute".action.spawn = noctalia "volume muteOutput";
+      "XF86AudioMicMute".action.spawn = noctalia "volume muteInput";
+      "XF86MonBrightnessUp".action.spawn = noctalia "brightness increase";
+      "XF86MonBrightnessDown".action.spawn = noctalia "brightness decrease";
+      "XF86Display".action.spawn = noctalia "nightLight toggle";
       "XF86NotificationCenter".action = toggle-overview;
-      "XF86PickupPhone".action = toggle-overview;
-      "XF86HangupPhone".action = toggle-overview;
-      "XF86Favorites".action = toggle-overview;
+      "XF86AddFavorite".action = noctalia "ipc call airplaneMode toggle";
 
       "Mod+1".action.focus-workspace = 1;
       "Mod+2".action.focus-workspace = 2;
@@ -99,10 +82,6 @@
       "Mod+WheelScrollDown".action = focus-column-right;
       "Mod+Shift+WheelScrollUp".action = focus-window-or-workspace-up;
       "Mod+Shift+WheelScrollDown".action = focus-window-or-workspace-down;
-      "Mod+U".action = focus-workspace-down;
-      "Mod+I".action = focus-workspace-up;
-      "Mod+Shift+U".action = move-column-to-workspace-down;
-      "Mod+Shift+I".action = move-column-to-workspace-up;
       "Mod+V".action = toggle-window-floating;
       "Mod+Shift+V".action = switch-focus-between-floating-and-tiling;
       "Mod+W".action = toggle-column-tabbed-display;
@@ -119,26 +98,12 @@
       "Mod+Equal".action.set-column-width = "+5%";
       "Mod+Shift+Minus".action.set-window-height = "-5%";
       "Mod+Shift+Equal".action.set-window-height = "+5%";
-      "Mod+Shift+A".action.screenshot = { };
-      "Mod+Shift+Ctrl+A".action.screenshot-screen = { };
-      # "Mod+E".action.spawn = [
-      #   "bash"
-      #   "-c"
-      #   "tofi-run | xargs niri msg action spawn --"
-      # ];
-      "Mod+Space".action.spawn = "anyrun";
-      "Mod+Z".action.spawn = "zen";
-      "Mod+D".action.spawn = "supersonic";
-      "Mod+N".action.spawn = "keepassxc";
-      "Mod+T".action.spawn = "vscode";
-      "Mod+Shift+T".action.spawn = "gnome-system-monitor";
-      "Mod+Shift+C".action.spawn = [
-        "hyprlock"
-      ];
-      "Mod+Return".action.spawn = "kitty";
-      "Mod+X".action.spawn = "kitty";
-      "Mod+Shift+P".action.spawn = "poweroff";
-      "Mod+Shift+O".action.spawn = "reboot";
+      "Mod+Shift+A".action.screenshot = {};
+      "Mod+Shift+A+X".action.screenshot-screen = {};
+      "Mod+Space".action.spawn = noctalia "launcher toggle";
+      "Mod+T".action.spawn = "${pkgs.alacritty}/bin/alacritty -e ${pkgs.helix}/bin/hx";
+      "Mod+Shift+C".action.spawn = noctalia "lockScreen lock";
+      "Mod+Return".action.spawn = "alacritty";
       "Mod+Tab".action = toggle-overview;
     };
   };

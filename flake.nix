@@ -1,13 +1,12 @@
 {
-  description = "Meow";
+  description = "Makai's NixOS Configuration";
 
   inputs = {
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    # You can access packages and modules from different nixpkgs revs
-    # at the same time. Here's an working example:
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    # Also see the 'unstable-packages' overlay at 'overlays/default.nix'.
+
+    # NixOS hardware (my fork)
+    nixos-hardware.url = "github:makai410/nixos-hardware/e14-lnl";
 
     # Noctalia
     noctalia = {
@@ -43,6 +42,15 @@
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Secret management
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Minecraft
+    nix-minecraft.url = "github:Infinidoge/nix-minecraft";
   };
 
   outputs = {

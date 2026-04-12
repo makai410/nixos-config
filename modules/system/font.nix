@@ -1,23 +1,22 @@
-{pkgs, ...}:
-{
+{pkgs, ...}: {
   fonts = {
     enableDefaultPackages = true;
     packages = with pkgs; [
-      noto-fonts
-      noto-fonts-cjk-sans
-      noto-fonts-emoji
-      source-han-serif          # 思源宋体
-      nerd-fonts.inconsolata    # Inconsolata Nerd Font
-      nerd-fonts.symbols-only   # just the icons if needed elsewhere
+      noto-fonts-color-emoji
+      ibm-plex # IBM Plex Sans
+      source-han-serif # 思源宋体
+      nerd-fonts.inconsolata # Inconsolata Nerd Font
+      meslo-lgs-nf # Tide Required
+      nerd-fonts.symbols-only # just the icons if needed elsewhere
     ];
 
     fontconfig = {
       defaultFonts = {
-        serif = [ "Source Han Serif SC" "Noto Serif" ];
-        sansSerif = [ "Noto Sans" "Noto Sans CJK SC" ];
-        monospace = [ "Inconsolata Nerd Font" ];
-        emoji = [ "Noto Color Emoji" ];
+        serif = ["Source Han Serif SC" "IBM Plex Serif" "Source Han Serif"];
+        sansSerif = ["IBM Plex Sans Chinese SC" "IBM Plex Sans"];
+        monospace = ["Inconsolata Nerd Font" "MesloLGS NF"];
+        emoji = ["Noto Color Emoji"];
       };
     };
-};
+  };
 }
