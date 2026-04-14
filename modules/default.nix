@@ -4,12 +4,20 @@
   ...
 }: let
   mkAppInner = config: {
-    system = (if builtins.pathExists ./apps/${config.app}/default.nix 
-    then [ ./apps/${config.app}/default.nix ] else [])
-    ++ config.extraSystemModules;
-    home = (if builtins.pathExists ./apps/${config.app}/${config.app}.nix 
-    then [ ./apps/${config.app}/${config.app}.nix ] else [])
-    ++ config.extraHomeModules;
+    system =
+      (
+        if builtins.pathExists ./apps/${config.app}/default.nix
+        then [./apps/${config.app}/default.nix]
+        else []
+      )
+      ++ config.extraSystemModules;
+    home =
+      (
+        if builtins.pathExists ./apps/${config.app}/${config.app}.nix
+        then [./apps/${config.app}/${config.app}.nix]
+        else []
+      )
+      ++ config.extraHomeModules;
   };
   mkApp = app: (mkAppInner {
     inherit app;

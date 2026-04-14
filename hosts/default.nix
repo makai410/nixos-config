@@ -19,7 +19,8 @@
     youshinron = {
       system = "x86_64-linux";
       stateVersion = "25.05";
-      profiles = with mods; [ # TODO
+      profiles = with mods; [
+        # TODO
         basic
         bootloader-systemd-boot
         headless-server
@@ -47,15 +48,17 @@
     byoushinwo = {
       system = "x86_64-linux";
       stateVersion = "25.05";
-      profiles = with mods; [
-        basic
-        bootloader-systemd-boot
-        laptop
-        desktop
-        dae
-        fcitx5
-        sops
-      ] ++ commonDesktopApps;
+      profiles = with mods;
+        [
+          basic
+          bootloader-systemd-boot
+          laptop
+          desktop
+          dae
+          fcitx5
+          sops
+        ]
+        ++ commonDesktopApps;
       extraSystemModules = [
         inputs.nixos-hardware.nixosModules.lenovo-thinkpad-e14-intel-gen7-lnl
       ];
