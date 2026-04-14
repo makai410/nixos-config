@@ -19,7 +19,7 @@
   users.users.${user}.openssh.authorizedKeys.keyFiles = [
     (pkgs.fetchurl {
       url = "https://github.com/makai410.keys";
-      sha256 = "10grsx4dgzcrhsqhwjw9c5ig841svv1pcwhdr2c67pw1x7rwiybd";
+      sha256 = "1xffza5nhmz0dccqwbhyp6b0271hia9yigwaib6hw8fbh5iyx8r1";
     })
   ];
 }
