@@ -1,4 +1,5 @@
 {
+  # FIXME: this is broken actually
   services.easytier = {
     enable = true;
 

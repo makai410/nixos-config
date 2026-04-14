@@ -5,6 +5,7 @@
   ...
 }: {
   # Shared packages
+  # FIXME: lots of apps are not required by VPS.
   home.packages = with pkgs; [
     btop
     htop
@@ -18,13 +19,16 @@
     typst
     vesktop
     vscode
+    libreoffice-qt-fresh
     pear-desktop
-    bitwarden
+    rustup
+    ouch
+    bitwarden-desktop
     bitwarden-cli
+    ripgrep-all
     (prismlauncher.override {
       # Change Java runtimes available to Prism Launcher
       jdks = [
-        graalvmPackages.graalvm-ce
         zulu8
         zulu17
         zulu

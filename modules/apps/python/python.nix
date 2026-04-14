@@ -1,5 +1,9 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
-    cloc
+    python3
+    pyright
+    ruff
+    poetry
+    uv
   ];
 }

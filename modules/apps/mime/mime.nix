@@ -1,5 +1,6 @@
 {
   xdg.configFile."mimeapps.list".force = true;
+  # FIXME
 
   # manage $XDG_CONFIG_HOME/mimeapps.list
   # xdg search all desktop entries from $XDG_DATA_DIRS, check it by command:

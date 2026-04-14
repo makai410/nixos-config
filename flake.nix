@@ -37,20 +37,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Rust toolchains and rust-analyzer nightly for Nix
-    fenix = {
-      url = "github:nix-community/fenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # Secret management
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # Minecraft
-    nix-minecraft.url = "github:Infinidoge/nix-minecraft";
   };
 
   outputs = {
@@ -70,10 +61,12 @@
 
     user = "makai";
 
+    nixpkgsOverlays = import ./overlays {inherit inputs;};
     hostConfigs = import ./hosts {
       inherit
         inputs
         user
+        nixpkgsOverlays
         ;
       inherit (nixpkgs) lib;
     };
@@ -85,9 +78,6 @@
     # Formatter for your nix files, available through 'nix fmt'
     # Other options beside 'alejandra' include 'nixpkgs-fmt'
     formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
-
-    # Your custom packages and modifications, exported as overlays
-    overlays = import ./overlays {inherit inputs;};
 
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild --flake .#your-hostname'

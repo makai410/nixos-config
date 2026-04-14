@@ -8,7 +8,7 @@
   # https://nixos.wiki/wiki/Overlays
   modifications = final: prev: {
     vesktop = prev.vesktop.override {commandLineArgs = ["--wayland-text-input-version=3" "--enable-wayland-ime"];};
-    steam = prev.steeam.override {commandLineArgs = ["--wayland-text-inout-version=3" "--enable-wayland-ime"];};
+    steam = prev.steam.override {commandLineArgs = ["--wayland-text-input-version=3" "--enable-wayland-ime"];};
     noctalia-shell = prev.noctalia-shell.override {calendarSupport = true;};
     # example = prev.example.overrideAttrs (oldAttrs: rec {
     # ...
@@ -19,8 +19,6 @@ in {
     additions
     modifications
     inputs.niri.overlays.niri
-    inputs.fenix.overlays.default
-    inputs.nix-minecraft.overlay
 
     # Configure your nixpkgs instance
     {

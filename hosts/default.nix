@@ -2,6 +2,7 @@
   lib,
   inputs,
   user,
+  nixpkgsOverlays,
   ...
 }: let
   mods = import ../modules {
@@ -9,7 +10,7 @@
   };
   inherit
     (mods)
-    commonApps
+    commonDesktopApps
     getSystemModules
     getHomeModules
     ;
@@ -18,11 +19,14 @@
     youshinron = {
       system = "x86_64-linux";
       stateVersion = "25.05";
-      profiles = with mods; [
+      profiles = with mods; [ # TODO
+        basic
         bootloader-systemd-boot
         headless-server
       ];
       extraSystemModules = [
+        inputs.nixos-hardware.nixosModules.common-cpu-amd
+        inputs.nixos-hardware.nixosModules.common-gpu-amd
       ];
       extraHomeModules = [
         {programs.niri.settings.mouse.accel-speed = -0.4;}
@@ -34,10 +38,7 @@
             niri
             catppuccin
           ];
-          extraSystemModules = [
-            inputs.nixos-hardware.nixosModules.common-cpu-amd
-            inputs.nixos-hardware.nixosModules.common-gpu-amd
-          ];
+          extraSystemModules = [];
         };
       };
     };
@@ -47,13 +48,16 @@
       system = "x86_64-linux";
       stateVersion = "25.05";
       profiles = with mods; [
+        basic
+        bootloader-systemd-boot
         laptop
         desktop
-        bootloader-systemd-boot
-      ];
+        dae
+        fcitx5
+        sops
+      ] ++ commonDesktopApps;
       extraSystemModules = [
         inputs.nixos-hardware.nixosModules.lenovo-thinkpad-e14-intel-gen7-lnl
-        inputs.nix-minecraft.nixosModules.minecraft-servers
       ];
       extraHomeModules = [
         {programs.niri.settings.mouse.accel-speed = -0.5;}
@@ -80,21 +84,9 @@ in {
           };
           modules =
             [
-              inputs.self.overlays
-
+              nixpkgsOverlays
               ../hosts/${hostName}/configuration.nix
               ../hosts/${hostName}/hardware-configuration.nix
-
-              ../modules/system/font.nix
-              ../modules/system/os-modules.nix
-              ../modules/system/i18n.nix
-              ../modules/system/networking.nix
-              ../modules/system/sops.nix
-
-              ../modules/services/openssh.nix
-              ../modules/services/dae.nix
-              ../modules/services/fcitx5.nix
-
               {
                 specialisation =
                   lib.mapAttrs (
@@ -112,7 +104,6 @@ in {
                   hostConfig.specialisation;
               }
             ]
-            ++ (getSystemModules commonApps)
             ++ (getSystemModules hostConfig.profiles)
             ++ hostConfig.extraSystemModules;
         }
@@ -139,11 +130,10 @@ in {
             };
             modules =
               [
-                inputs.self.overlays
+                nixpkgsOverlays
                 ../hosts/hm-manager.nix
                 ../hosts/${hostName}/home.nix
               ]
-              ++ (getHomeModules commonApps)
               ++ (getHomeModules hostConfig.profiles)
               ++ hostConfig.extraHomeModules;
           }

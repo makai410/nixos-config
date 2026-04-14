@@ -1,7 +1,6 @@
 {
-  programs.direnv = {
+  programs.zellij = {
     enable = true;
     enableFishIntegration = true;
-    nix-direnv = true;
   };
 }

@@ -2,6 +2,7 @@
   home.packages = with pkgs; [
     ouch # archive
     ffmpeg # video
+    ffmpegthumbnailer
     jq # json
     poppler_utils # pdf
     fd # file search

@@ -1,7 +1,6 @@
 {
-  programs.direnv = {
+  programs.zoxide = {
     enable = true;
     enableFishIntegration = true;
-    nix-direnv = true;
   };
 }
