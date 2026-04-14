@@ -1,7 +1,7 @@
 {
-  services.logind = {
-    lidSwitch = "hibernate";
-    powerKey = "ignore";
+  services.logind.settings.Login = {
+    HandleLidSwitch = "hibernate";
+    HandlePowerKey = "ignore";
   };
   networking.networkmanager.wifi.powersave = true;
 }
