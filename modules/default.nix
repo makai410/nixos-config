@@ -98,6 +98,7 @@
     helix = mkApp "helix";
     imv = mkApp "imv";
     mime = mkApp "mime";
+    mpv = mkApp "mpv";
     niri = mkApp "niri";
     noctalia = mkApp "noctalia";
     obs = mkApp "obs";
@@ -140,6 +141,7 @@ in
       helix
       imv
       mime
+      mpv
       niri
       noctalia
       obs

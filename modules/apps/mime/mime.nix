@@ -20,12 +20,13 @@
         "Helix.desktop"
       ];
     in {
-      "application/json" = browser;
-      "application/pdf" = browser;
+      "application/json" = editor;
+      "application/x-wine-extension-ini" = editor;
+      "text/plain" = editor;
 
       "text/html" = browser;
       "text/xml" = browser;
-      "text/plain" = editor;
+      "application/pdf" = browser;
       "application/xml" = browser;
       "application/xhtml+xml" = browser;
       "application/xhtml_xml" = browser;
@@ -36,7 +37,6 @@
       "application/x-extension-shtml" = browser;
       "application/x-extension-xht" = browser;
       "application/x-extension-xhtml" = browser;
-      "application/x-wine-extension-ini" = editor;
 
       # define default applications for some url schemes.
       "x-scheme-handler/about" = browser; # open `about:` url with `browser`
@@ -51,13 +51,13 @@
 
       "x-scheme-handler/tg" = ["org.telegram.desktop.desktop "];
 
-      # "audio/*" = [ "mpv.desktop" ];
-      # "video/*" = [ "mpv.desktop" ];
-      # "image/*" = [ "imv-dir.desktop" ];
-      # "image/gif" = [ "imv-dir.desktop" ];
-      # "image/jpeg" = [ "imv-dir.desktop" ];
-      # "image/png" = [ "imv-dir.desktop" ];
-      # "image/webp" = [ "imv-dir.desktop" ];
+      "audio/*" = ["mpv.desktop"];
+      "video/*" = ["mpv.desktop"];
+      "image/*" = ["imv-dir.desktop"];
+      "image/gif" = ["imv-dir.desktop"];
+      "image/jpeg" = ["imv-dir.desktop"];
+      "image/png" = ["imv-dir.desktop"];
+      "image/webp" = ["imv-dir.desktop"];
 
       "inode/directory" = ["yazi.desktop"];
     };
