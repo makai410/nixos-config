@@ -1,7 +1,7 @@
 global {
   log_level: warn
 
-  tporxy_port: 12345
+  tproxy_port: 12345
   allow_insecure: false
   check_interval: 30s
   check_tolerance: 50ms
