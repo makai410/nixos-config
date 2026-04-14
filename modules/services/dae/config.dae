@@ -22,10 +22,6 @@ global {
   so_mark_from_dae: 0
 }
 
-subscription {
-  kch: '${config.sops.placeholder."proxy_sub_v2ray"}'
-}
-
 dns {
   upstream {
     googledns: 'tcp+udp://dns.google:53'
@@ -41,10 +37,17 @@ dns {
   }
 }
 
+node {
+  clash: 'socks5://127.0.0.1:7891'
+}
+
 group {
-  proxy {
-    policy: min_moving_avg
-    filter: subtag(kch) && name(keyword: '美国 9929 01')
+  #proxy {
+  #  policy: min_moving_avg
+  #  filter: subtag(kch) && name(keyword: '美国 9929 01')
+  #}
+  clash {
+    policy: fixed(0)  
   }
 }
 
